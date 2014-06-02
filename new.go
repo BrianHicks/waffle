@@ -15,6 +15,7 @@ var cmdOpen = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			fmt.Println("I need a project name!")
+			os.Exit(1)
 		}
 		conf := loadConfig()
 		if err := os.Chdir(conf.Dir); err != nil {
