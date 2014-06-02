@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
+	"path"
 	"strings"
 )
 
@@ -60,20 +61,24 @@ func saveConfig(conf *config) error {
 	return err
 }
 
-func git(conf *config, args ...string) (stdout []byte, err error) {
-	path, err := exec.LookPath("git")
-	if err != nil {
-		fmt.Printf("Couldn't find git! Is it installed?\n\n%s\n", err)
-		os.Exit(1)
-	}
+func exists(conf *config, filename string) bool {
+	_, err := os.Stat(filename)
+	return !os.IsNotExist(err)
+}
 
+func edit(conf *config, filename string) error {
 	cmd := exec.Cmd{
-		Path: path,
-		Args: append([]string{path}, args...),
-		Dir:  conf.Dir,
+		Path: conf.Editor,
+		Args: append(
+			[]string{conf.Editor},
+			path.Join(conf.Dir, filename),
+		),
+		Dir: conf.Dir,
+
+		// pass these through!
+		Stdin:  os.Stdin,
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
 	}
-
-	stdout, err = cmd.CombinedOutput()
-
-	return
+	return cmd.Run()
 }

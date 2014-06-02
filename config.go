@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
@@ -10,7 +11,8 @@ import (
 var configPath = expandPath("~/.waffle.json")
 
 type config struct {
-	Dir string
+	Dir    string
+	Editor string
 }
 
 var (
@@ -43,6 +45,16 @@ var (
 					}
 				}
 			}
+
+			conf.Editor = expandPath(questionStr(
+				"What editor do you want to use?",
+				os.Getenv("EDITOR"),
+			))
+			fullPath, err := exec.LookPath(conf.Editor)
+			if err != nil {
+				fmt.Printf("I couldn't find that in the PATH, what's up with that?\n\n%s\n", err)
+			}
+			conf.Editor = fullPath
 
 			if err := saveConfig(conf); err != nil {
 				fmt.Printf("shoot, we couldn't write!\n\n%s\n", err)
