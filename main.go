@@ -7,9 +7,7 @@ var root = &cobra.Command{
 }
 
 func init() {
-	cmdConfig.AddCommand(cmdConfigInit, cmdConfigShow)
-
-	root.AddCommand(cmdConfig, cmdOpen, cmdShow)
+	root.AddCommand(cmdOpen, cmdShow, cmdInit, cmdConfig)
 }
 
 func main() {

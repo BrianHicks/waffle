@@ -16,11 +16,7 @@ type config struct {
 }
 
 var (
-	cmdConfig = &cobra.Command{
-		Use: "config",
-	}
-
-	cmdConfigInit = &cobra.Command{
+	cmdInit = &cobra.Command{
 		Use:   "init",
 		Short: "initialize a configuration (or overwrite)",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -65,13 +61,14 @@ var (
 		},
 	}
 
-	cmdConfigShow = &cobra.Command{
-		Use:   "show",
+	cmdConfig = &cobra.Command{
+		Use:   "config",
 		Short: "show the current config",
 		Run: func(cmd *cobra.Command, args []string) {
 			conf := loadConfig()
 
 			fmt.Printf("Dir: %s\n", conf.Dir)
+			fmt.Printf("Editor: %s\n", conf.Editor)
 		},
 	}
 )
