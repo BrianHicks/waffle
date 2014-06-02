@@ -14,3 +14,8 @@ generate a config file.
 
 Waffle uses git to store and sync your projects. You'll just need to have git
 available in your `PATH` to do it.
+
+## Usage
+
+Run `waffle open [project-name]` and you'll be presented with your editor. Once
+it exits, your changes will be committed.
