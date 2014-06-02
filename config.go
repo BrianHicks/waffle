@@ -20,7 +20,7 @@ var (
 		Use: "config",
 	}
 
-	cmdInit = &cobra.Command{
+	cmdConfigInit = &cobra.Command{
 		Use:   "init",
 		Short: "initialize a configuration (or overwrite)",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -65,7 +65,7 @@ var (
 		},
 	}
 
-	cmdShow = &cobra.Command{
+	cmdConfigShow = &cobra.Command{
 		Use:   "show",
 		Short: "show the current config",
 		Run: func(cmd *cobra.Command, args []string) {
